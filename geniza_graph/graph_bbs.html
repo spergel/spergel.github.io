@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <meta name="theme-color" content="#000000">
+    <meta name="description" content="Interactive network visualization of Geniza correspondence">
+    <title>GENIZA NETWORK TERMINAL</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <link rel="stylesheet" href="css/bbs-style.css">
+</head>
+<body>
+    <!-- CRT overlay effects -->
+    <div class="crt-overlay"></div>
+    <div class="scanlines"></div>
+    
+    <!-- Main terminal container -->
+    <div class="terminal-container">
+        <!-- Header bar -->
+        <div class="header-bar">
+            <span class="header-title">╔═══ GENIZA CORRESPONDENCE NETWORK TERMINAL v1.0 ═══╗</span>
+            <span class="header-status" id="status-bar">INITIALIZING...</span>
+        </div>
+
+        <!-- Main content area -->
+        <div class="main-content">
+            <!-- Left sidebar -->
+            <div class="sidebar" id="sidebar">
+                <button class="sidebar-toggle" id="sidebar-toggle" style="display: none;">
+                    ▼ SHOW FILTERS
+                </button>
+                <div class="sidebar-content">
+                <div class="panel">
+                    <div class="panel-title">║ FILTERS ║</div>
+                    <div class="panel-content">
+                        <div class="filter-section">
+                            <div class="section-label">┌─ TIME PERIOD ─┐</div>
+                            <div class="time-controls">
+                                <input type="number" id="year-start" class="year-input" value="750" min="750" max="1250">
+                                <span class="range-separator">TO</span>
+                                <input type="number" id="year-end" class="year-input" value="1250" min="750" max="1250">
+                            </div>
+                            <div class="slider-container">
+                                <input type="range" id="year-slider-start" min="750" max="1250" value="750" class="year-slider">
+                                <input type="range" id="year-slider-end" min="750" max="1250" value="1250" class="year-slider">
+                            </div>
+                        </div>
+
+                        <div class="filter-section">
+                            <div class="section-label">┌─ TAGS ─┐</div>
+                            <div class="tags-list" id="tags-list">
+                                <!-- Tags will be populated here -->
+                            </div>
+                            <button class="terminal-button" id="toggle-all-tags">SELECT ALL</button>
+                        </div>
+
+                        <div class="filter-section">
+                            <div class="section-label">┌─ DATASET ─┐</div>
+                            <button class="terminal-button" id="toggle-dataset">2+ LETTERS</button>
+                        </div>
+
+                        <div class="filter-section">
+                            <div class="section-label">┌─ THEME ─┐</div>
+                            <button class="terminal-button" id="toggle-theme">☀ LIGHT MODE</button>
+                        </div>
+
+                        <button class="terminal-button apply-button" id="apply-filters">► APPLY FILTERS</button>
+                    </div>
+                </div>
+
+                <div class="panel">
+                    <div class="panel-title">║ STATS ║</div>
+                    <div class="panel-content stats-content">
+                        <div class="stat-line">NODES: <span id="stat-nodes">0</span></div>
+                        <div class="stat-line">LINKS: <span id="stat-links">0</span></div>
+                        <div class="stat-line">LETTERS: <span id="stat-letters">0</span></div>
+                        <div class="stat-line">PERIOD: <span id="stat-period">---</span></div>
+                    </div>
+                </div>
+                </div>
+            </div>
+
+            <!-- Graph area -->
+            <div class="graph-area">
+                <div class="graph-panel">
+                    <div class="graph-title">╔═══ NETWORK VISUALIZATION ═══╗</div>
+                    <div id="graph-container"></div>
+                    <div class="graph-controls">
+                        <div class="control-hint">[ DRAG nodes | SCROLL zoom | CLICK for details ]</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Details panel (slides up from bottom) -->
+        <div class="details-panel" id="details-panel">
+            <div class="details-header">
+                <span class="details-title">╔═══ CORRESPONDENCE DETAILS ═══╗</span>
+                <button class="close-button" id="close-details">[X] CLOSE</button>
+            </div>
+            <div class="details-content" id="details-content">
+                <!-- Details will be populated here -->
+            </div>
+        </div>
+
+        <!-- Footer bar -->
+        <div class="footer-bar">
+            <span>[F1] HELP</span>
+            <span>[F2] RESET</span>
+            <span>[F3] EXPORT</span>
+            <span>[ESC] CLEAR</span>
+            <span id="cursor-blink">█</span>
+        </div>
+    </div>
+
+    <script src="js/bbs-graph.js"></script>
+    <script src="js/bbs-ui.js"></script>
+</body>
+</html>

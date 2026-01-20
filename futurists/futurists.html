@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>You Are Not a Futurist</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: "Roboto", "Helvetica Neue", Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #fff;
+      color: #111;
+      line-height: 1.6;
+    }
+    p { /* General paragraph styling */
+      font-size: 0.95rem; /* Make default paragraph text smaller */
+      /* Add other general p stylings here if needed, like margin-bottom */
+      margin-bottom: 0.75rem; /* Consistent bottom margin for paragraphs */
+    }
+    .brochure {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: repeat(2, 1fr);
+      gap: 0;
+      height: 100vh;
+      width: 100vw;
+      box-sizing: border-box;
+    }
+    .panel {
+      position: relative;
+      padding: 2.5rem 2rem 2rem 2rem;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      background: #fff;
+      border-right: 4px solid #111;
+      border-bottom: 4px solid #111;
+      min-height: 0;
+      min-width: 0;
+      overflow: hidden;
+    }
+    .panel:nth-child(3n) {
+      border-right: none;
+    }
+    .title {
+      font-family: "Montserrat", Arial, sans-serif;
+      font-size: 2.2rem;
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 1.2rem;
+      line-height: 1.1;
+      position: relative;
+      z-index: 2;
+    }
+    .title-main {
+      font-size: 3.6rem; /* Base size, will be overridden by lines */
+      letter-spacing: 0.1em;
+      margin-bottom: 0.8rem;
+      line-height: 0.85; /* Tighter line height for stacked title */
+      font-weight: normal;
+    }
+    .title-main span {
+      display: block; /* Each line on its own */
+      text-align: left; /* Default, but explicit */
+    }
+    .title-line-1 { /* YOU */
+      font-size: 5.4rem; /* Approx 1.5x of 3.6rem */
+      letter-spacing: 0.08em;
+    }
+    .title-line-2 { /* ARE NOT A */
+      font-size: 3.2rem; /* Smaller than YOU */
+      letter-spacing: 0.08em;
+    }
+    .title-line-3 { /* FUTURIST */
+      font-size: 2.8rem; /* Smallest, slightly smaller than line 2 */
+      letter-spacing: 0.08em;
+    }
+    .tagline {
+      font-family: "Montserrat", Arial, sans-serif;
+      font-size: 1.3rem;
+      font-weight: 700;
+      letter-spacing: 0.1em; /* Increased letter spacing */
+      text-transform: uppercase;
+      color: #111; /* CHANGED from #222 */
+      padding: 0.2rem 0; /* Minimal vertical padding */
+      margin-top: 1rem; /* Adjusted spacing */
+      margin-bottom: 1.5rem;
+      display: block;
+      text-align: left;
+    }
+    .subtitle {
+      font-size: 1.1rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #111; /* CHANGED from #555 */
+      margin-bottom: 1.5rem;
+    }
+    .list {
+      margin-top: 1.2rem;
+      padding-left: 0;
+      list-style: none;
+    }
+    .list li {
+      margin-bottom: 0.7rem;
+      padding: 0.4rem 1rem;
+      background: none; /* REMOVED #f3f3f3 */
+      border-left: 5px solid #111;
+      font-weight: 500;
+      font-size: 1.05rem;
+      color: #111; /* CHANGED from #222 */
+      margin-left: 0;
+    }
+    .compromise-list {
+      margin-top: 1rem;
+      padding-left: 0.5rem;
+      list-style: none;
+    }
+    .compromise-list li {
+      font-family: "Roboto", "Helvetica Neue", Arial, sans-serif;
+      font-size: 1rem;
+      color: #111; /* CHANGED from #333 */
+      padding: 0.3rem 0 0.3rem 1.5rem;
+      margin-bottom: 0.6rem;
+      position: relative;
+      border:none;
+      background: none;
+      font-weight: normal;
+    }
+    .compromise-list li::before {
+      content: "\27A4"; 
+      position: absolute;
+      left: 0;
+      top: 0.3rem;
+      color: #111;
+      font-size: 1.2em;
+      font-weight: bold;
+    }
+    .compromise-list li strong {
+      font-family: "Montserrat", Arial, sans-serif;
+      font-weight: 700;
+      color: #111;
+    }
+    .emphasis-scream {
+      font-weight: 900;
+      font-size: 1.2em; 
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+    }
+    .quote {
+      font-style: normal; 
+      margin-top: 1.5rem;
+      padding: 1rem 1.2rem;
+      background: none; /* REMOVED #e0e0e0 */
+      color: #111; 
+      font-size: 1.05rem; 
+      border: 2px solid #111; 
+      border-left-width: 6px; 
+      max-width: 100%; 
+    }
+    .featured-image-container {
+      position: relative; 
+      flex-grow: 1; 
+      display: flex; 
+      align-items: center;
+      justify-content: center;
+      width: auto; 
+      max-width: 90%; 
+      margin: 1.5rem auto 0 auto; 
+      padding: 20px; 
+      border: 3px solid #111;
+      overflow: hidden; 
+      min-height: 0; 
+    }
+    .featured-image-container img {
+      display: block;
+      max-width: 100%;
+      object-fit: contain;
+      position: relative; 
+      z-index: 1; 
+    }
+    .vertical-text {
+      position: absolute;
+      top: 2rem;
+      right: -2.2rem;
+      font-family: "Montserrat", Arial, sans-serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #111;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      transform: rotate(90deg);
+      opacity: 0.18;
+      z-index: 1;
+      pointer-events: none;
+    }
+    .diagonal-bar {
+      position: absolute;
+      top: 10px; /* Adjusted for visibility as solid line */
+      left: -30px; /* Adjusted */
+      width: 150px; /* Adjusted */
+      height: 4px;  /* Thinner line */
+      background: #111; /* Solid black */
+      transform: rotate(-18deg);
+      z-index: 0;
+    }
+    .panel.blank {
+      background: #fff;
+      border: none;
+      display: flex;
+      align-items: flex-end;
+      justify-content: flex-end;
+    }
+    .colophon {
+      font-size: 0.95rem;
+      color: #111; /* CHANGED from #888 */
+      border: 2px solid #111;
+      padding: 0.7rem 1.2rem;
+      margin: 1.5rem;
+      background: none; /* REMOVED #fff background */
+      font-family: "Montserrat", Arial, sans-serif;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .background-text-no {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      font-family: "Montserrat", Arial, sans-serif;
+      font-size: 2rem; 
+      font-weight: 900;
+      color: #111;
+      opacity: 0.1; /* Keeping this for now as Panel 1 is liked */
+      text-transform: uppercase;
+      text-align: center;
+      line-height: 0.9;
+      overflow: hidden;
+      z-index: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap; 
+      word-break: break-all; 
+    }
+    .panel-divider-hr {
+      border: none;
+      border-top: 4px solid #111;
+      margin-top: 0; /* Align with top padding of panel content area */
+      margin-bottom: 1.5rem;
+      width: 100%;
+    }
+    .open-box-title {
+      padding: 0.5rem 0;
+      margin: 1.5rem auto 1.5rem auto; /* Centered with vertical margin */
+      text-align: center;
+      position: relative;
+      max-width: 80%; /* Constrain width */
+    }
+    .open-box-title span {
+      font-family: "Montserrat", Arial, sans-serif;
+      font-size: 0.95rem;
+      color: #111;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 0.5rem 1rem; /* Padding inside the 'box' */
+      display: inline-block;
+    }
+    .open-box-title::before, .open-box-title::after {
+      content: '';
+      position: absolute;
+      width: 20px; /* Length of the corner lines */
+      height: 20px; /* Length of the corner lines */
+      border-color: #111;
+      border-style: solid;
+    }
+    /* Top-left corner element, drawing top and right lines */
+    .open-box-title::before {
+      top: 0;
+      left: 0;
+      border-width: 3px 3px 0 0; /* Top and Right borders */
+    }
+    /* Bottom-right corner element, drawing bottom and left lines */
+    .open-box-title::after {
+      bottom: 0;
+      right: 0;
+      border-width: 0 0 3px 3px; /* Bottom and Left borders */
+    }
+    .prophecy-paragraph {
+      border-left: 3px solid #111;
+      padding-left: 10px;
+      margin-bottom: 1rem; /* Space between these paragraphs */
+      font-size: 0.95rem; /* Ensuring consistent size */
+    }
+    @media print {
+      body {
+        background: #fff;
+        color: #111;
+      }
+      .panel {
+        box-shadow: none;
+      }
+      .image-placeholder {
+        box-shadow: none;
+      }
+      .quote {
+        box-shadow: none;
+      }
+      .colophon {
+        box-shadow: none;
+      }
+      .panel:nth-child(3) {
+        page-break-after: always; /* Force a page break after the 3rd panel for printing */
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="brochure">
+    <!-- Panel 1: Front Cover (Rightmost when flat) -->
+    <div class="panel">
+      <div class="title title-main">
+        <span class="title-line-1">YOU</span>
+        <span class="title-line-2">ARE NOT A</span>
+        <span class="title-line-3">FUTURIST</span>
+      </div>
+      <div class="featured-image-container">
+        <div class="background-text-no">
+          NO NO NO NO NO NO NO NO NO NO NO NO NO NO NO NO NO NO NO NO NO NO NO NO NO NO NO NO NO NO NO NO NO NO NO NO NO NO NO NO NO NO NO NO NO NO NO NO NO NO NO NO NO NO NO NO NO NO NO NO NO NO NO NO NO NO NO NO NO NO NO NO NO NO NO NO NO NO NO NO NO NO NO NO NO NO NO NO NO NO NO NO NO NO NO NO NO NO NO NO NO NO NO NO NO NO NO
+        </div>
+        <img src="images/marinetti.png" alt="Marinetti">
+      </div>
+    </div>
+    <!-- Panel 2: Back Cover (Center when flat) -->
+    <div class="panel">
+      <div class="title">Futurism: A Legacy of Failure</div>
+      <p>Futurism's promise of radical change collapsed under the weight of its own contradictions, leaving a legacy of complicity, not revolution. Their vaunted rebellion dissolved into shameful subservience, a cautionary tale of how easily the avant-garde can become a sad echo of the establishment it once scorned.</p>
+      <p>To embrace 'Futurism' now is to inherit this legacy of artistic compromise and ideological bankruptcy. It's to willingly don the mantle of a movement whose future already spectacularly failed, dissolving into irrelevance and moral compromise.</p>
+      <hr class="panel-divider-hr" style="margin-top: 1.5rem;">
+      <p style="margin-top:1.5rem; font-size:1.1rem; font-weight:bold; color:#111; text-align:center;">The 21st century demands more than ghosts from a failed revolution.</p>
+    </div>
+    <!-- Panel 3: Flap (Leftmost when flat) -->
+    <div class="panel">
+      <div class="title">Still Calling Yourself a Futurist?</div>
+      <p>Futurism's original scream? A calculated bid for relevance, more shock tactic than genuine revolution. Invoking it today is anachronistic masturbation over a failed revolutionary movement. Sounds a bit like being a Socialist, huh?</p>
+      <p style="font-size: 1.15rem; font-weight:bold; color:#111;">You might be clinging to the label if:</p>
+      <ul class="list">
+        <li>Your 'innovation' is mistaking noise for novelty, just as they did.</li>
+        <li>Your 'critique' is a fresh coat of paint on their attention-grabbing aesthetics.</li>
+        <li>Your 'artistic energy' is spent agitating within acceptable bounds for the establishment's approval.</li>
+      </ul>
+    </div>
+   
+    <!-- Panel 4: Inside Left -->
+    <div class="panel">
+      
+      <div class="title">What Was Futurism?</div>
+      <hr class="panel-divider-hr" style="margin-bottom: 1.2rem; margin-top: -0.2rem;">
+      <p>Futurism began in 1909 with a <span class="emphasis-scream">scream</span>—Marinetti's "Manifesto of Futurism." Their entire ideology was based on explosive and unconstrained artistic energy. It was anti-clerical, anti-democracy, and proud.</p>
+      <p>As soon as they got close to power, they bit their tongue on all their principles and became the establishment's strongest defenders. Even before the Fascist takeover in 1922, the Futurists surrendered their authenticity to Mussolini, even helping write the Fascist manifesto of 1919.</p>
+      <p style="margin-top:1.5rem; font-weight:bold; color:#111;">What did they get in return? </p>
+      <p style="margin-top:0.25rem;">Stripped of genuine vigor and influence, their grand project devolved into manufacturing trivial culture wars. Their final, hollow gesture was a crusade against pasta to promote Mussolini's autarkic agricultural policy.</p>
+
+    </div>
+    <!-- Panel 5: Inside Center -->
+    <div class="panel">
+      <p style="margin-top:0rem; margin-bottom:0.5rem; font-size: 1.1rem; font-weight:bold; color:#111;">Their zeal extinguished, their compromises mounted:</p>
+      <ul class="compromise-list">
+        <li><strong>Sacred Art:</strong> From vowing to burn churches to begging to bathe them in neon for Mussolini's approval.</li>
+        <li><strong>Academic Revolt:</strong> From demanding the demolition of academies to accepting sinecures within them.</li>
+        <li><strong>Anti-Capitalist Stance:</strong> From communalist nationalism to begging Mussolini to let shopowners have neon signs in piazzas, and begging clergy to reconsider a ban.</li>
+      </ul>
+      <div class="quote">“Pastasciutta, therefore, is an absurd Italian gastronomic religion.” — F.T. Marinetti on his "war on pasta"</div>
+    </div>
+     <!-- Panel 6: Inside Right-->
+    <div class="panel">
+      <div class="open-box-title">
+        <span>THE FUTURE OF THE FUTURISTS</span>
+      </div>
+      <p class="prophecy-paragraph"> <span class="emphasis-scream">You will</span> lose your vigor and fade while artists appealing to baser instincts are celebrated.</p>
+      <p class="prophecy-paragraph"> <span class="emphasis-scream">You will</span> be ridiculed by the establishment and the avant-garde.</p>
+      <p class="prophecy-paragraph"> <span class="emphasis-scream">You will</span> bend backwards to justify compromising your principles for a increasingly inane and reactionary leadership.</p>
+      <p class="prophecy-paragraph"> <span class="emphasis-scream">You will</span> be a Futurist.</p>
+    </div>
+  </div>
+</body>
+</html>
