@@ -128,6 +128,21 @@ class BBSTerminalUI {
         document.getElementById('toggle-dataset').addEventListener('click', (e) => {
             this.currentDataset = this.currentDataset === 'all' ? 'twoPlus' : 'all';
             e.target.textContent = this.currentDataset === 'all' ? '2+ LETTERS' : 'ALL LETTERS';
+            
+            // Get new dataset's tags
+            const newTags = this.getAllTags();
+            const newTagsSet = new Set(newTags);
+            
+            // Remove any selected tags that don't exist in new dataset
+            const tagsToRemove = [];
+            this.filters.selectedTags.forEach(tag => {
+                if (!newTagsSet.has(tag)) {
+                    tagsToRemove.push(tag);
+                }
+            });
+            tagsToRemove.forEach(tag => this.filters.selectedTags.delete(tag));
+            
+            // Repopulate UI and apply
             this.populateTags();
             this.applyFilters();
         });
