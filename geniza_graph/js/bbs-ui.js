@@ -1,3 +1,9 @@
+// D3's forceLink mutates link.source/target from string IDs into node objects.
+// This helper returns the ID in either case so callers don't need to care.
+function endpointId(endpoint) {
+    return endpoint && typeof endpoint === 'object' ? endpoint.id : endpoint;
+}
+
 // BBS UI Controller
 class BBSTerminalUI {
     constructor() {
@@ -306,31 +312,34 @@ class BBSTerminalUI {
         const currentData = this.data[this.currentDataset];
         if (!currentData) return;
         
-        // Filter links
-        const filteredLinks = currentData.links.filter(link => {
-            // Check tags
-            const hasSelectedTags = this.filters.selectedTags.size === 0 || 
-                (link.tags && link.tags.some(tag => this.filters.selectedTags.has(tag)));
-            
-            // Check time range
-            const hasLettersInRange = link.letters && link.letters.some(letter => 
-                letter.date >= this.filters.yearStart && letter.date <= this.filters.yearEnd
-            );
-            
-            return hasSelectedTags && hasLettersInRange;
-        });
-        
+        // Filter links and clone with string IDs. D3's forceLink mutates
+        // link.source/target into node object references; if we pass the same
+        // mutated links back on a later render, D3 keeps the stale references
+        // and the new nodes get no link forces (they drift apart while lines
+        // draw from old coordinates).
+        const filteredLinks = currentData.links
+            .filter(link => {
+                const hasSelectedTags = this.filters.selectedTags.size === 0 ||
+                    (link.tags && link.tags.some(tag => this.filters.selectedTags.has(tag)));
+                const hasLettersInRange = link.letters && link.letters.some(letter =>
+                    letter.date >= this.filters.yearStart && letter.date <= this.filters.yearEnd
+                );
+                return hasSelectedTags && hasLettersInRange;
+            })
+            .map(link => ({
+                ...link,
+                source: endpointId(link.source),
+                target: endpointId(link.target)
+            }));
+
         // Extract nodes from filtered links
         const nodesMap = new Map();
         filteredLinks.forEach(link => {
-            const sourceId = typeof link.source === 'object' ? link.source.id : link.source;
-            const targetId = typeof link.target === 'object' ? link.target.id : link.target;
-            
-            if (!nodesMap.has(sourceId)) {
-                nodesMap.set(sourceId, { id: sourceId, name: sourceId });
+            if (!nodesMap.has(link.source)) {
+                nodesMap.set(link.source, { id: link.source, name: link.source });
             }
-            if (!nodesMap.has(targetId)) {
-                nodesMap.set(targetId, { id: targetId, name: targetId });
+            if (!nodesMap.has(link.target)) {
+                nodesMap.set(link.target, { id: link.target, name: link.target });
             }
         });
         
@@ -399,9 +408,9 @@ class BBSTerminalUI {
         const lettersTo = [];
         
         currentData.links.forEach(link => {
-            const sourceId = typeof link.source === 'object' ? link.source.id : link.source;
-            const targetId = typeof link.target === 'object' ? link.target.id : link.target;
-            
+            const sourceId = endpointId(link.source);
+            const targetId = endpointId(link.target);
+
             if (sourceId === node.id && link.letters) {
                 link.letters.forEach(letter => {
                     lettersFrom.push({ ...letter, to: targetId });
